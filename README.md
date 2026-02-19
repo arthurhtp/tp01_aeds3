@@ -12,6 +12,7 @@
 
 -   Arthur Henrique Tristão Pinto\
 -   Davi Godoi Grilo
+-   Lucas Grossi
 
 ------------------------------------------------------------------------
 
