@@ -3,8 +3,8 @@
 ## CRUD com Arquivos Sequenciais (Array de Bytes)
 
 **Disciplina:** Algoritmos e Estruturas de Dados III\
-**Professor:** *(preencher)*\
-**Instituição:** *(preencher)*
+**Professor:** *Walisson Ferreira de Carvalho*
+**Instituição:** *PUC MINAS*
 
 ------------------------------------------------------------------------
 
