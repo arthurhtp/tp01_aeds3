@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import Header from '../components/Header';
-import AmbientesCarousel from '../components/AmbientesCarousel';
-import ModalCadastroAmbiente from '../components/ModalCadastroAmbiente';
+import { Header } from '../components/Header/index';
+import { AmbientesCarousel } from '../components/AmbientesCarousel/index';
+import { ModalCadastroAmbiente } from '../components/ModalCadastroAmbiente/index';
 import type { Ambiente } from '../types/home.types';
 import { ambientesService } from '../services/home.service';
 
