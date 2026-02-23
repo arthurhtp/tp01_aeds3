@@ -1,0 +1,10 @@
+export const PAGINA_TITULO = 'MEUS AMBIENTES';
+export const FOOTER_TEXTO = 'StockIT © 2025 - Gerenciamento de Estoque de Alimentos';
+export const NENHUM_AMBIENTE = 'Nenhum ambiente cadastrado ainda.';
+export const NENHUM_AMBIENTE_HINT = 'Clique em "Adicionar Ambientes" para começar.';
+export const ERRO_CARREGAR = 'Erro ao carregar ambientes';
+export const ERRO_HINT = 'Verifique sua conexão e tente novamente.';
+export const BTN_ADICIONAR = 'Adicionar Ambientes';
+export const CONFIRM_SAIR = 'Deseja sair?';
+export const CONFIRM_EXCLUIR = 'Tem certeza? Esta ação não pode ser desfeita!';
+export const ERRO_CARREGAR_AMBIENTE = 'Erro ao carregar ambiente.';
