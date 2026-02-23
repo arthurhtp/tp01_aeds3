@@ -1,5 +1,5 @@
 export const PAGINA_TITULO = 'MEUS AMBIENTES';
-export const FOOTER_TEXTO = 'StockIT © 2025 - Gerenciamento de Estoque de Alimentos';
+export const FOOTER_TEXTO = 'StockIT © 2026 - Gerenciamento de Estoque de Alimentos';
 export const NENHUM_AMBIENTE = 'Nenhum ambiente cadastrado ainda.';
 export const NENHUM_AMBIENTE_HINT = 'Clique em "Adicionar Ambientes" para começar.';
 export const ERRO_CARREGAR = 'Erro ao carregar ambientes';
