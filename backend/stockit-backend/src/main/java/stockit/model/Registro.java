@@ -1,4 +1,5 @@
-package backend.model;
+package stockit.model;
+
 import java.io.IOException;
 
 public interface Registro {
