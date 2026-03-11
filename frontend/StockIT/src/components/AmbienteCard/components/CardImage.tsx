@@ -1,5 +1,5 @@
-import type { CardImageProps } from '../types';
-import { getImgAmbiente, getNomeAmbiente } from '../utils';
+import type { CardImageProps } from "../types";
+import { getImgAmbiente, getNomeAmbiente } from "../utils";
 
 export function CardImage({ ambiente }: CardImageProps) {
   return (
@@ -8,9 +8,6 @@ export function CardImage({ ambiente }: CardImageProps) {
         src={getImgAmbiente(ambiente.tipo)}
         alt={getNomeAmbiente(ambiente)}
         className="w-full h-full object-cover"
-        onError={e => {
-          (e.target as HTMLImageElement).style.display = 'none';
-        }}
       />
     </div>
   );

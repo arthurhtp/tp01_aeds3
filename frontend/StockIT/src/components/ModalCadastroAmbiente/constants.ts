@@ -1,6 +1,6 @@
 export const TIPOS = [
-  { value: '1', label: 'Geladeira' },
-  { value: '2', label: 'Freezer' },
+  { value: '1', label: 'Refrigerador' },
+  { value: '2', label: 'Congelador' },
   { value: '3', label: 'Despensa' },
 ];
 
