@@ -29,7 +29,6 @@ public class Arquivo<T extends Registro> {
 
         if (arquivo.length() < TAM_CABECALHO) {
             arquivo.writeInt(0); // Último ID usado
-            arquivo.writeLong(-1); // Lista de registros excluídos
         }
     }
 
@@ -41,19 +40,10 @@ public class Arquivo<T extends Registro> {
         obj.setId(novoID);
         byte[] dados = obj.toByteArray();
 
-        long endereco = getDeleted(dados.length);
-        if (endereco == -1) {
-            arquivo.seek(arquivo.length());
-            endereco = arquivo.getFilePointer();
-            arquivo.writeByte(' '); // Lápide
-            arquivo.writeShort(dados.length);
-            arquivo.write(dados);
-        } else {
-            arquivo.seek(endereco);
-            arquivo.writeByte(' '); // Remove a lápide
-            arquivo.skipBytes(2);
-            arquivo.write(dados);
-        }
+        arquivo.seek(arquivo.length());
+        arquivo.writeByte(' '); // Lápide
+        arquivo.writeShort(dados.length);
+        arquivo.write(dados);
         return obj.getId();
     }
 
@@ -92,7 +82,6 @@ public class Arquivo<T extends Registro> {
                 if (obj.getId() == id) {
                     arquivo.seek(posicao);
                     arquivo.writeByte('*');
-                    addDeleted(tamanho, posicao);
                     return true;
                 }
             }
@@ -122,21 +111,11 @@ public class Arquivo<T extends Registro> {
                     } else {
                         arquivo.seek(posicao);
                         arquivo.writeByte('*');
-                        addDeleted(tamanho, posicao);
 
-                        long novoEndereco = getDeleted(novosDados.length);
-                        if (novoEndereco == -1) {
-                            arquivo.seek(arquivo.length());
-                            novoEndereco = arquivo.getFilePointer();
-                            arquivo.writeByte(' ');
-                            arquivo.writeShort(novoTam);
-                            arquivo.write(novosDados);
-                        } else {
-                            arquivo.seek(novoEndereco);
-                            arquivo.writeByte(' ');
-                            arquivo.skipBytes(2);
-                            arquivo.write(novosDados);
-                        }
+                        arquivo.seek(arquivo.length());
+                        arquivo.writeByte(' ');
+                        arquivo.writeShort(novoTam);
+                        arquivo.write(novosDados);
                     }
                     return true;
                 }
@@ -145,73 +124,7 @@ public class Arquivo<T extends Registro> {
         return false;
     }
 
-    private void addDeleted(int tamanhoEspaco, long enderecoEspaco) throws Exception {
-        long posicao = 4;
-        arquivo.seek(posicao);
-        long endereco = arquivo.readLong();
-        long proximo;
 
-        if (endereco == -1) {
-            arquivo.seek(4);
-            arquivo.writeLong(enderecoEspaco);
-            arquivo.seek(enderecoEspaco + 3);
-            arquivo.writeLong(-1);
-        } else {
-            do {
-                arquivo.seek(endereco + 1);
-                int tamanho = arquivo.readShort();
-                proximo = arquivo.readLong();
-
-                if (tamanho > tamanhoEspaco) {
-                    if (posicao == 4)
-                        arquivo.seek(posicao);
-                    else
-                        arquivo.seek(posicao + 3);
-                    arquivo.writeLong(enderecoEspaco);
-                    arquivo.seek(enderecoEspaco + 3);
-                    arquivo.writeLong(endereco);
-                    break;
-                }
-
-                if (proximo == -1) {
-                    arquivo.seek(endereco + 3);
-                    arquivo.writeLong(enderecoEspaco);
-                    arquivo.seek(enderecoEspaco + 3);
-                    arquivo.writeLong(-1);
-                    break;
-                }
-
-                posicao = endereco;
-                endereco = proximo;
-            } while (endereco != -1);
-        }
-    }
-
-    private long getDeleted(int tamanhoNecessario) throws Exception {
-        long posicao = 4;
-        arquivo.seek(posicao);
-        long endereco = arquivo.readLong();
-        long proximo;
-        int tamanho;
-
-        while (endereco != -1) {
-            arquivo.seek(endereco + 1);
-            tamanho = arquivo.readShort();
-            proximo = arquivo.readLong();
-
-            if (tamanho > tamanhoNecessario) {
-                if (posicao == 4)
-                    arquivo.seek(posicao);
-                else
-                    arquivo.seek(posicao + 3);
-                arquivo.writeLong(proximo);
-                return endereco;
-            }
-            posicao = endereco;
-            endereco = proximo;
-        }
-        return -1;
-    }
 
     public void close() throws Exception {
         arquivo.close();
