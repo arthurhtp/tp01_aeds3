@@ -9,7 +9,7 @@ import java.util.List;
 import stockit.model.Registro;
 
 public class Arquivo<T extends Registro> {
-    private static final int TAM_CABECALHO = 12;
+    private static final int TAM_CABECALHO = 4;
     private RandomAccessFile arquivo;
     private String nomeArquivo;
     private Constructor<T> construtor;
@@ -48,7 +48,7 @@ public class Arquivo<T extends Registro> {
     }
 
     public T read(int id) throws Exception {
-        arquivo.seek(12);
+        arquivo.seek(TAM_CABECALHO);
         while (arquivo.getFilePointer() < arquivo.length()) {
             long posicao = arquivo.getFilePointer();
             byte lapide = arquivo.readByte();
