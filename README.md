@@ -8,165 +8,67 @@
 
 ------------------------------------------------------------------------
 
-## 👥 Integrantes da dupla
+## 👥 Integrantes do grupo
 
 -   Arthur Henrique Tristão Pinto\
 -   Davi Godoi Grilo
 -   Lucas Grossi
-
+-   Augusto Bizzaria
 ------------------------------------------------------------------------
 
-## 📌 Descrição do Trabalho
+# StockIT – Projeto AEDS3
 
-Este trabalho tem como objetivo o desenvolvimento de uma aplicação
-**Front-end + Back-end** utilizando persistência de dados em **arquivos
-binários sequenciais**, manipulados diretamente como **array de bytes**,
-sem a utilização de sistemas gerenciadores de banco de dados (SGBDs).
+## Observações
 
-A aplicação implementa as quatro operações fundamentais de um sistema de
-dados (**CRUD -- Create, Read, Update e Delete**) com armazenamento
-físico em arquivo `.db`, seguindo o modelo tradicional de registros
-variáveis com controle de exclusão lógica por **lápide**.
+- Atualmente o temos 1 CRUD completo integrado com o frontend sendo ele o de ambientes
 
-------------------------------------------------------------------------
+## Requisitos
 
-## 🎯 Objetivos
+Antes de executar o projeto, é necessário ter instalado:
 
--   Implementar persistência de dados utilizando **arquivo binário
-    sequencial**.
--   Manipular registros através de **serialização manual para
-    byte\[\]**.
--   Implementar **CRUD completo**.
--   Utilizar **exclusão lógica (lápide)**.
--   Manter controle de identificadores por meio de **cabeçalho no
-    arquivo**.
--   Desenvolver uma interface web simples (HTML/CSS/JS ou framework)
-    para interação com o sistema.
--   Aplicar arquitetura organizada em camadas (**MVC + DAO**).
+* **Node.js** (versão 18 ou superior)
+* **NPM** (instalado junto com Node.js)
+* **Java JDK** (versão 17 ou superior)
+* **Apache Maven**
+* **Git** (opcional, para clonar o repositório)
 
-------------------------------------------------------------------------
+---
 
-## 🧠 Conceitos Aplicados
+## Como executar o projeto
 
--   Estrutura de Arquivos\
--   Registros de tamanho variável\
--   Serialização manual (`toByteArray()` / `fromByteArray()`)\
--   Exclusão lógica\
--   Varredura sequencial\
--   Organização em camadas\
--   Integração Front-end e Back-end
+### 1. Instalar dependências do Node
 
-------------------------------------------------------------------------
+Na pasta raiz do projeto(tp01_aeds3):
 
-## 🗂 Estrutura do Arquivo Binário
-
-### 🔹 Cabeçalho
-
-    int ultimoId
-
-Responsável por armazenar o último identificador utilizado no sistema.
-
-### 🔹 Estrutura de cada Registro
-
-    byte lapide
-    int tamanho
-    byte[] payload
-
--   `' '` → Registro ativo\
--   `'*'` → Registro excluído logicamente\
--   `tamanho` → Quantidade de bytes do objeto serializado\
--   `payload` → Dados do objeto convertidos para array de bytes
-
-------------------------------------------------------------------------
-
-## 🔁 Operações CRUD
-
-### ✔ Create
-
--   Gera novo ID automaticamente.
--   Serializa o objeto para byte\[\].
--   Grava o registro no final do arquivo.
-
-### ✔ Read
-
--   Realiza busca sequencial pelo ID.
--   Ignora registros marcados como excluídos.
-
-### ✔ Update
-
--   Se o novo registro possuir tamanho menor ou igual ao original,
-    sobrescreve no mesmo local.
--   Caso contrário, marca o registro antigo com lápide e grava o novo no
-    final do arquivo.
-
-### ✔ Delete
-
--   Marca o registro como excluído utilizando lápide (`'*'`).
-
-------------------------------------------------------------------------
-
-## 🏗 Arquitetura do Projeto
-
-### 📂 Model
-
-Representação das entidades do sistema.
-
-### 📂 DAO
-
-Responsável pela manipulação direta do arquivo binário.
-
-### 📂 Controller
-
-Gerencia regras de negócio e comunicação com o front-end.
-
-### 📂 View (Front-end)
-
-Interface web para interação com o usuário.
-
-------------------------------------------------------------------------
-
-## 🌐 Tecnologias Utilizadas
-
--   Linguagem de Programação: *(ex: Java)*\
--   Manipulação de Arquivos: `RandomAccessFile`\
--   Front-end: *(HTML/CSS/JavaScript ou framework utilizado)*\
--   Comunicação: API REST
-
-------------------------------------------------------------------------
-
-## 📈 Justificativa Técnica
-
-A utilização de arquivos sequenciais com registros em array de bytes
-permite:
-
--   Compreensão aprofundada da persistência física de dados.
--   Controle manual da estrutura dos registros em disco.
--   Simulação do funcionamento interno de sistemas gerenciadores de
-    banco de dados.
--   Aplicação prática dos conceitos de organização de arquivos estudados
-    em AEDS III.
-
-------------------------------------------------------------------------
-
-## 🚀 Execução do Projeto
-
-*(Inserir instruções específicas após implementação.)*
-
-Exemplo:
-
-``` bash
-# Executar backend
-./run.sh
-
-# Acessar frontend
-http://localhost:8080
+```bash
+npm install
 ```
 
-------------------------------------------------------------------------
+---
 
-## 📚 Conclusão
+### 2. Executar o projeto
 
-Este trabalho consolida os conhecimentos de organização de arquivos,
-manipulação binária e arquitetura de sistemas, aplicando conceitos
-fundamentais de Estruturas de Dados em um sistema completo com interface
-web e persistência própria.
+Na pasta raiz do projeto execute:
+
+```bash
+npm run dev
+```
+
+Este comando irá iniciar:
+
+* **Backend**: aplicação Spring Boot
+* **Frontend**: aplicação React (Vite)
+
+---
+
+### 3. Acessar o sistema
+
+Após iniciar o projeto, o frontend estará disponível em:
+
+```
+http://localhost:5173
+```
+
+O backend estará rodando na porta padrão do **Spring Boot (8080)**.
+
+
