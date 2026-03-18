@@ -111,23 +111,29 @@ public class ItemAmbienteController {
         }
     }
 
-    // ==============================
-    // READ ALL (GET)
+  // ==============================
+    // READ ALL (Corrigido para usar DTO)
     // ==============================
     @GetMapping
     public ResponseEntity<List<ItemAmbienteDTO>> listar() {
         try {
+            // Pega a lista bruta do arquivo binário
             List<ItemAmbiente> listaModel = dao.listar();
-            List<ItemAmbienteDTO> listaDTO = new ArrayList<>();
             
-            // Converte todos os itens encontrados para enviar ao front
-            for (ItemAmbiente item : listaModel) {
-                listaDTO.add(converterParaDTO(item));
+            // Proteção contra nulo
+            if (listaModel == null) {
+                return ResponseEntity.ok(new ArrayList<>());
+            }
+
+            // Converte cada ItemAmbiente para ItemAmbienteDTO para o React entender as datas
+            List<ItemAmbienteDTO> listaDTO = new ArrayList<>();
+            for (ItemAmbiente model : listaModel) {
+                listaDTO.add(converterParaDTO(model));
             }
             
             return ResponseEntity.ok(listaDTO);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); 
             return ResponseEntity.internalServerError().build();
         }
     }

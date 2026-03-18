@@ -4,7 +4,7 @@ import stockit.dao.AmbienteDAO;
 import stockit.model.Ambiente;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -58,12 +58,19 @@ public class AmbienteController {
     public ResponseEntity<List<Ambiente>> listar() {
         try {
             List<Ambiente> lista = dao.listar();
+            
+            // Se a lista vier nula do DAO, retornamos uma lista vazia []
+            if (lista == null) {
+                lista = new ArrayList<>();
+            }
+            
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
+            // Imprime o erro no terminal para você saber o que houve
+            e.printStackTrace(); 
             return ResponseEntity.internalServerError().build();
         }
     }
-
     // ==============================
     // UPDATE
     // ==============================
