@@ -1,8 +1,10 @@
 import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { SearchResult, Ambiente } from '../../../types/home.types';
 import { ambientesService } from '../../../services/home.service';
 
 export function useSearch() {
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -43,7 +45,7 @@ export function useSearch() {
     setShowDropdown(false);
     setQuery('');
     if (result.type === 'ambiente') {
-      window.location.href = `../ambientes/ambiente.html?id=${result.id}`;
+      navigate(`/ambiente/${result.id}`);
     }
   };
 

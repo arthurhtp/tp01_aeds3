@@ -1,11 +1,16 @@
-import "./index.css"
+import "./index.css";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HomePage } from './pages/HomePage';
+import { AmbientePage } from './pages/AmbientePage/ambientePage';
 
 export function App() {
-
-
   return (
-    <>
-      <div className='bg-amber-400'>Teste</div>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/ambiente/:id" element={<AmbientePage />} />
+        <Route path="*" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }

@@ -1,32 +1,32 @@
 package stockit.controller;
 
-import stockit.dao.AmbienteDAO;
-import stockit.model.Ambiente;
+import stockit.dao.CategoriaAlimentoDAO;
+import stockit.model.CategoriaAlimento;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/ambientes")
+@RequestMapping("/categorias-alimento")
 @CrossOrigin(origins = "http://localhost:5173") // React (Vite)
-public class AmbienteController {
+public class CategoriaAlimentoController {
 
-    private final AmbienteDAO dao;
+    private final CategoriaAlimentoDAO dao;
 
-    public AmbienteController() throws Exception {
-        this.dao = new AmbienteDAO();
+    public CategoriaAlimentoController() throws Exception {
+        this.dao = new CategoriaAlimentoDAO();
     }
 
     // ==============================
     // CREATE
     // ==============================
     @PostMapping
-    public ResponseEntity<Ambiente> criar(@RequestBody Ambiente ambiente) {
+    public ResponseEntity<CategoriaAlimento> criar(@RequestBody CategoriaAlimento categoria) {
         try {
-            int id = dao.inserir(ambiente);
-            ambiente.setId(id);
-            return ResponseEntity.ok(ambiente);
+            int id = dao.inserir(categoria);
+            categoria.setId(id);
+            return ResponseEntity.ok(categoria);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -36,15 +36,15 @@ public class AmbienteController {
     // READ by ID
     // ==============================
     @GetMapping("/{id}")
-    public ResponseEntity<Ambiente> buscar(@PathVariable int id) {
+    public ResponseEntity<CategoriaAlimento> buscar(@PathVariable int id) {
         try {
-            Ambiente ambiente = dao.buscar(id);
+            CategoriaAlimento categoria = dao.buscar(id);
 
-            if (ambiente == null) {
+            if (categoria == null) {
                 return ResponseEntity.notFound().build();
             }
 
-            return ResponseEntity.ok(ambiente);
+            return ResponseEntity.ok(categoria);
 
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
@@ -55,33 +55,26 @@ public class AmbienteController {
     // READ ALL
     // ==============================
     @GetMapping
-    public ResponseEntity<List<Ambiente>> listar() {
+    public ResponseEntity<List<CategoriaAlimento>> listar() {
         try {
-            List<Ambiente> lista = dao.listar();
-
-            // Se a lista vier nula do DAO, retornamos uma lista vazia []
-            if (lista == null) {
-                lista = new ArrayList<>();
-            }
-
+            List<CategoriaAlimento> lista = dao.listar();
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
-            // Imprime o erro no terminal para você saber o que houve
-            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
+
     // ==============================
     // UPDATE
     // ==============================
     @PutMapping("/{id}")
     public ResponseEntity<Boolean> atualizar(
             @PathVariable int id,
-            @RequestBody Ambiente ambiente) {
+            @RequestBody CategoriaAlimento categoria) {
 
         try {
-            ambiente.setId(id);
-            boolean atualizado = dao.alterar(ambiente);
+            categoria.setId(id);
+            boolean atualizado = dao.alterar(categoria);
 
             if (!atualizado) {
                 return ResponseEntity.notFound().build();

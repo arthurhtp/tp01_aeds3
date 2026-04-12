@@ -1,12 +1,15 @@
-import type { Ambiente } from '../../types/home.types';
+import type { Ambiente } from "../../types/home.types";
+import imgD from "../../assets/images/ambiente-images/D.png";
+import imgF from "../../assets/images/ambiente-images/F.png";
+import imgG from "../../assets/images/ambiente-images/G.png";
 
 export function getNomeAmbiente(amb: Ambiente): string {
-  return amb.nome ?? amb.nomeAmbiente ?? 'Ambiente';
+  return amb.nome ?? amb.nomeAmbiente ?? "Ambiente";
 }
 
 export function getImgAmbiente(tipo: number): string {
-  if (tipo === 1) return '/assets/images/ambientes-images/G.png';
-  if (tipo === 2) return '/assets/images/ambientes-images/F.png';
-  if (tipo === 3) return '/assets/images/ambientes-images/D.png';
-  return '/assets/images/ambientes-images/tipo3.png';
+  if (tipo === 1) return imgG;
+  if (tipo === 2) return imgF;
+  if (tipo === 3) return imgD;
+  return imgD;
 }
