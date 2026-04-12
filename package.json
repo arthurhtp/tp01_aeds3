@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dev": "concurrently  \"cd backend/stockit-backend && mvn spring-boot:run\" \"cd frontend/StockIT && npm run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

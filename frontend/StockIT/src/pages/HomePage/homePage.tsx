@@ -3,7 +3,6 @@ import { ModalCadastroAmbiente } from '../../components/ModalCadastroAmbiente';
 import { AmbientesSection, PageFooter } from './components';
 import { useAmbientes, useAmbienteModal } from './hooks';
 import { ambientesService } from '../../services/home.service';
-import { tipoNumParaChar } from './utils';
 import { CONFIRM_SAIR, CONFIRM_EXCLUIR, ERRO_CARREGAR_AMBIENTE } from './constants';
 
 export function HomePage() {
@@ -19,7 +18,7 @@ export function HomePage() {
   // ── Cadastro / Edição ──────────────────────────────────────
   async function handleSubmitAmbiente(nome: string, tipo: string) {
     if (ambienteEditando) {
-      await ambientesService.update(ambienteEditando.id, nome, tipoNumParaChar(Number(tipo)));
+      await ambientesService.update(ambienteEditando.id, nome, tipo);
     } else {
       await ambientesService.create(nome, tipo);
     }
