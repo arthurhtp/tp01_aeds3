@@ -62,7 +62,7 @@ public class AmbienteController {
             if (lista == null) {
                 lista = new ArrayList<>();
             }
-            
+
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
             e.printStackTrace(); 
