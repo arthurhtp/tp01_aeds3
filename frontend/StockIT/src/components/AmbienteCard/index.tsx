@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import type { AmbienteCardProps } from "./types";
 import { CardImage, CardFooter } from "./components";
 
@@ -6,9 +7,11 @@ export function AmbienteCard({
   onEditar,
   onExcluir,
 }: AmbienteCardProps) {
+  const navigate = useNavigate();
+
   function handleCardClick(e: React.MouseEvent) {
     if ((e.target as HTMLElement).closest(".menu-area")) return;
-    window.location.href = `../ambientes/ambiente.html?id=${ambiente.id}`;
+    navigate(`/ambiente/${ambiente.id}`);
   }
 
   return (
