@@ -59,13 +59,8 @@ public class AmbienteController {
         try {
             List<Ambiente> lista = dao.listar();
             
-            if (lista == null) {
-                lista = new ArrayList<>();
-            }
-
             return ResponseEntity.ok(lista);
         } catch (Exception e) {
-            e.printStackTrace(); 
             return ResponseEntity.internalServerError().build();
         }
     }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categorias-alimento")
+@RequestMapping("/categoria-alimento")
 @CrossOrigin(origins = "http://localhost:5173") // React (Vite)
 public class CategoriaAlimentoController {
 

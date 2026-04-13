@@ -20,7 +20,7 @@ export interface Ambiente {
 
 export interface Categoria {
   id: number;
-  nomeCategoria: string;
+  nome: string;
 }
 
 export interface AlimentoTabela {

@@ -1,6 +1,7 @@
 import type { Ambiente, Alimento, Categoria, ItemAmbiente } from './ambiente.types';
 
-const API_URL = '';
+const API_URL = 'http://localhost:8081';
+const URL_CATEGORIAS = `${API_URL}/categoria-alimento`
 
 export const ambienteService = {
   async getById(id: number): Promise<Ambiente> {
@@ -59,10 +60,36 @@ export const alimentoService = {
 };
 
 export const categoriaService = {
+  
+
   async getAll(): Promise<Categoria[]> {
-    const res = await fetch(`${API_URL}/categorias_alimentos`);
+    const res = await fetch(`${URL_CATEGORIAS}`);
     if (!res.ok) throw new Error('Erro ao buscar categorias');
     return res.json();
+  },
+
+  async criar(nomeCategoria: string): Promise<Categoria> {
+    const res = await fetch(`${URL_CATEGORIAS}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome:nomeCategoria }),
+    });
+    if (!res.ok) throw new Error('Erro ao criar categoria');
+    return res.json();
+  },
+
+  async atualizar(id: number, nomeCategoria: string): Promise<void> {
+    const res = await fetch(`${URL_CATEGORIAS}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, nome:nomeCategoria }),
+    });
+    if (!res.ok) throw new Error('Erro ao atualizar categoria');
+  },
+
+  async deletar(id: number): Promise<void> {
+    const res = await fetch(`${URL_CATEGORIAS}/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Erro ao deletar categoria');
   },
 };
 
