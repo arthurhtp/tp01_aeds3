@@ -198,10 +198,6 @@ export function AmbientePage() {
                   className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-emerald-700 transition-colors">
                   ➕ Adicionar Alimento
                 </button>
-                <button onClick={() => setModalExcluirVencidos(true)}
-                  className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-red-600 transition-colors">
-                  🗑️ Remover Vencidos
-                </button>
               </div>
             </div>
           </div>
