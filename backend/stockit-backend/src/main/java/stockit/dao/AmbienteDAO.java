@@ -6,11 +6,11 @@ import stockit.model.Ambiente;
 public class AmbienteDAO {
 
     private Arquivo<Ambiente> arq;
-    private IndicePrimario indice;
+    private HashExtensivel indice;
 
     public AmbienteDAO() throws Exception {
-        arq = new Arquivo<>("Ambiente", Ambiente.class.getConstructor());
-        indice = new IndicePrimario("Ambiente");
+        arq    = new Arquivo<>("Ambiente", Ambiente.class.getConstructor());
+        indice = new HashExtensivel("Ambiente");
     }
 
     public int inserir(Ambiente a) throws Exception {
@@ -30,7 +30,7 @@ public class AmbienteDAO {
         if (posicaoAntiga == -1) return false;
         long novaPosicao = arq.updateComPosicao(a, posicaoAntiga);
         if (novaPosicao != posicaoAntiga) {
-            indice.atualizar(a.getId(), novaPosicao);
+            indice.inserir(a.getId(), novaPosicao);
         }
         return true;
     }
@@ -39,7 +39,7 @@ public class AmbienteDAO {
         long posicao = indice.buscar(id);
         if (posicao == -1) return false;
         arq.deleteAtPosition(posicao);
-        indice.deletar(id);
+        indice.excluir(id);
         return true;
     }
 

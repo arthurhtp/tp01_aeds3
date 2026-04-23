@@ -6,11 +6,11 @@ import stockit.model.Alimento;
 public class AlimentoDAO {
 
     private Arquivo<Alimento> arq;
-    private IndicePrimario indice;
+    private HashExtensivel indice;
 
     public AlimentoDAO() throws Exception {
-        arq = new Arquivo<>("Alimento", Alimento.class.getConstructor());
-        indice = new IndicePrimario("Alimento");
+        arq    = new Arquivo<>("Alimento", Alimento.class.getConstructor());
+        indice = new HashExtensivel("Alimento");
     }
 
     public int inserir(Alimento a) throws Exception {
@@ -30,7 +30,7 @@ public class AlimentoDAO {
         if (posicaoAntiga == -1) return false;
         long novaPosicao = arq.updateComPosicao(a, posicaoAntiga);
         if (novaPosicao != posicaoAntiga) {
-            indice.atualizar(a.getId(), novaPosicao);
+            indice.inserir(a.getId(), novaPosicao);
         }
         return true;
     }
@@ -39,7 +39,7 @@ public class AlimentoDAO {
         long posicao = indice.buscar(id);
         if (posicao == -1) return false;
         arq.deleteAtPosition(posicao);
-        indice.deletar(id);
+        indice.excluir(id);
         return true;
     }
 
