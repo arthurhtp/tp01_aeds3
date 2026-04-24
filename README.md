@@ -1,26 +1,21 @@
-# Trabalho Prático 3 -- AEDS III
+# Trabalho Prático -- AEDS III
 
-## CRUD com Arquivos Sequenciais (Array de Bytes)
+## CRUD com Arquivos Sequenciais 
 
 **Disciplina:** Algoritmos e Estruturas de Dados III\
-**Professor:** *Walisson Ferreira de Carvalho*
+**Professor:** *Walisson Ferreira de Carvalho*\
 **Instituição:** *PUC MINAS*
 
 ------------------------------------------------------------------------
 
 ## 👥 Integrantes do grupo
 
--   Arthur Henrique Tristão Pinto\
+-   Arthur Henrique Tristão Pinto
 -   Davi Godoi Grilo
--   Lucas Grossi
 -   Augusto Bizzaria
 ------------------------------------------------------------------------
 
 # StockIT – Projeto AEDS3
-
-## Observações
-
-- Atualmente o temos 1 CRUD completo integrado com o frontend sendo ele o de ambientes
 
 ## Requisitos
 
@@ -39,6 +34,13 @@ Antes de executar o projeto, é necessário ter instalado:
 ### 1. Instalar dependências do Node
 
 Na pasta raiz do projeto(tp01_aeds3):
+
+```bash
+npm install
+```
+---
+
+Na pasta de UI(frontend):
 
 ```bash
 npm install
@@ -66,9 +68,9 @@ Este comando irá iniciar:
 Após iniciar o projeto, o frontend estará disponível em:
 
 ```
-http://localhost:5173
+http://localhost:PORT QUE O VITE MOSTRAR
 ```
 
-O backend estará rodando na porta padrão do **Spring Boot (8080)**.
+O backend estará rodando na porta padrão do **Spring Boot (8081)**.
 
 
