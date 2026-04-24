@@ -14,9 +14,9 @@ public class AlimentoDAO {
 
     public AlimentoDAO() throws Exception {
         arq           = new Arquivo<>("Alimento", Alimento.class.getConstructor());
-        hashPK        = new HashExtensivel<>("AlimentoPK",        new ParIntLong());
-        hashNome      = new HashExtensivel<>("AlimentoNome",      new ParStringLong());
-        hashCategoria = new HashExtensivel<>("AlimentoCategoria",  new ParIntListaInt());
+        hashPK        = new HashExtensivel<>("Alimento", "AlimentoPK",        new ParIntLong());
+        hashNome      = new HashExtensivel<>("Alimento", "AlimentoNome",      new ParStringLong());
+        hashCategoria = new HashExtensivel<>("Alimento", "AlimentoCategoria",  new ParIntListaInt());
     }
 
     public int inserir(Alimento a) throws Exception {

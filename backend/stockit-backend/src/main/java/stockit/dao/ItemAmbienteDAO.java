@@ -14,9 +14,9 @@ public class ItemAmbienteDAO {
 
     public ItemAmbienteDAO() throws Exception {
         arq          = new Arquivo<>("ItemAmbiente", ItemAmbiente.class.getConstructor());
-        hashPK       = new HashExtensivel<>("ItemAmbientePK",       new ParIntLong());
-        hashAmbiente = new HashExtensivel<>("ItemAmbienteAmbiente", new ParIntListaInt());
-        hashAlimento = new HashExtensivel<>("ItemAmbienteAlimento", new ParIntListaInt());
+        hashPK       = new HashExtensivel<>("ItemAmbiente", "ItemAmbientePK",       new ParIntLong());
+        hashAmbiente = new HashExtensivel<>("ItemAmbiente", "ItemAmbienteAmbiente", new ParIntListaInt());
+        hashAlimento = new HashExtensivel<>("ItemAmbiente", "ItemAmbienteAlimento", new ParIntListaInt());
     }
 
     public int inserir(ItemAmbiente item) throws Exception {

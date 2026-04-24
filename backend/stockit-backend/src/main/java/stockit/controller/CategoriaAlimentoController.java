@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categoria-alimento")
-@CrossOrigin(origins = "http://localhost:5173") // React (Vite)
+@CrossOrigin(origins = "*")
 public class CategoriaAlimentoController {
 
     private final CategoriaAlimentoDAO dao;

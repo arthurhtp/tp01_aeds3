@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/itens-ambiente")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/itens_ambiente")
+@CrossOrigin(origins = "*")
 public class ItemAmbienteController {
 
     private final ItemAmbienteDAO dao;

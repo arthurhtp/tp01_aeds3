@@ -12,8 +12,8 @@ public class AmbienteDAO {
 
     public AmbienteDAO() throws Exception {
         arq    = new Arquivo<>("Ambiente", Ambiente.class.getConstructor());
-        hashPK   = new HashExtensivel<>("AmbientePK",   new ParIntLong());
-        hashNome = new HashExtensivel<>("AmbienteNome", new ParStringLong());
+        hashPK   = new HashExtensivel<>("Ambiente", "AmbientePK",   new ParIntLong());
+        hashNome = new HashExtensivel<>("Ambiente", "AmbienteNome", new ParStringLong());
     }
 
     public int inserir(Ambiente a) throws Exception {

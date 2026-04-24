@@ -37,7 +37,7 @@ class HashExtensivelTest {
         @BeforeAll
         static void setup() throws Exception {
             limparPasta("TestePK");
-            hash = new HashExtensivel<>("TestePK", new ParIntLong());
+            hash = new HashExtensivel<>("TestePK", "TestePK", new ParIntLong());
         }
 
         @AfterAll
@@ -128,7 +128,7 @@ class HashExtensivelTest {
         @BeforeAll
         static void setup() throws Exception {
             limparPasta("TesteNome");
-            hash = new HashExtensivel<>("TesteNome", new ParStringLong());
+            hash = new HashExtensivel<>("TesteNome", "TesteNome", new ParStringLong());
         }
 
         @AfterAll
@@ -206,7 +206,7 @@ class HashExtensivelTest {
         @BeforeAll
         static void setup() throws Exception {
             limparPasta("TesteRel");
-            hash = new HashExtensivel<>("TesteRel", new ParIntListaInt());
+            hash = new HashExtensivel<>("TesteRel", "TesteRel", new ParIntListaInt());
         }
 
         @AfterAll

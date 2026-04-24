@@ -12,8 +12,8 @@ public class CategoriaAlimentoDAO {
 
     public CategoriaAlimentoDAO() throws Exception {
         arq      = new Arquivo<>("CategoriaAlimento", CategoriaAlimento.class.getConstructor());
-        hashPK   = new HashExtensivel<>("CategoriaAlimentoPK",   new ParIntLong());
-        hashNome = new HashExtensivel<>("CategoriaAlimentoNome", new ParStringLong());
+        hashPK   = new HashExtensivel<>("CategoriaAlimento", "CategoriaAlimentoPK",   new ParIntLong());
+        hashNome = new HashExtensivel<>("CategoriaAlimento", "CategoriaAlimentoNome", new ParStringLong());
     }
 
     public int inserir(CategoriaAlimento c) throws Exception {

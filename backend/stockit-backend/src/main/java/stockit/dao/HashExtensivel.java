@@ -155,13 +155,13 @@ public class HashExtensivel<T extends HashExtensivel.RegistroHash> {
     }
 
     @SuppressWarnings("unchecked")
-    public HashExtensivel(String nomeBase, T prototipo) throws Exception {
+    public HashExtensivel(String pastaEntidade, String nomeIndice, T prototipo) throws Exception {
         this.prototipo = prototipo;
         this.tamRegistro = prototipo.tamanho();
         this.tamBalde = Integer.BYTES + Integer.BYTES + CAPACIDADE * (1 + tamRegistro);
-        File pasta = new File("./data/" + nomeBase);
+        File pasta = new File("./data/" + pastaEntidade);
         if (!pasta.exists()) pasta.mkdirs();
-        String prefixo = "./data/" + nomeBase + "/" + nomeBase;
+        String prefixo = "./data/" + pastaEntidade + "/" + nomeIndice;
         dir = new RandomAccessFile(prefixo + ".dir", "rw");
         bkt = new RandomAccessFile(prefixo + ".bkt", "rw");
         if (dir.length() == 0) { setProfGlobal(0); setEndBalde(0, 0L); escreverBalde(new Balde(0, 0L)); }
