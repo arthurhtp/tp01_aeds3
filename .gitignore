@@ -6,6 +6,10 @@ package-lock.json
 # Maven
 target/
 
+# Arquivos de dados gerados em tempo de execução
+data/
+backend/stockit-backend/data/
+
 # OS
 .DS_Store
 Thumbs.db

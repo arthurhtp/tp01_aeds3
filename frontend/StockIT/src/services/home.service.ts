@@ -4,6 +4,7 @@ const API_URL = "http://localhost:8081";
 
 export const ambientesService = {
   async getAll(): Promise<Ambiente[]> {
+    // Agora a rota final será: http://localhost:8081/ambientes
     const res = await fetch(`${API_URL}/ambientes`);
     if (!res.ok) throw new Error("Erro ao buscar ambientes");
     return res.json();
@@ -41,6 +42,7 @@ export const ambientesService = {
 
 export const alimentosService = {
   async getAll(): Promise<Alimento[]> {
+    // Antes estava buscando em /ambientes/alimentos, agora busca no lugar certo
     const res = await fetch(`${API_URL}/alimentos`);
     if (!res.ok) throw new Error("Erro ao buscar alimentos");
     return res.json();
