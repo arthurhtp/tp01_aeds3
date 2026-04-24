@@ -135,19 +135,11 @@ public class Arquivo<T extends Registro> {
         obj.setId(novoID);
         byte[] dados = obj.toByteArray();
 
-        long endereco = getDeleted(dados.length);
-        if (endereco == -1) {
-            arquivo.seek(arquivo.length());
-            endereco = arquivo.getFilePointer();
-            arquivo.writeByte(' ');
-            arquivo.writeShort(dados.length);
-            arquivo.write(dados);
-        } else {
-            arquivo.seek(endereco);
-            arquivo.writeByte(' ');
-            arquivo.skipBytes(2);
-            arquivo.write(dados);
-        }
+        arquivo.seek(arquivo.length());
+        long endereco = arquivo.getFilePointer();
+        arquivo.writeByte(' ');
+        arquivo.writeShort(dados.length);
+        arquivo.write(dados);
         return new long[]{ obj.getId(), endereco };
     }
 
@@ -180,21 +172,11 @@ public class Arquivo<T extends Registro> {
         } else {
             arquivo.seek(posicaoAntiga);
             arquivo.writeByte('*');
-            addDeleted(tamanhoAntigo, posicaoAntiga);
-
-            long novoEndereco = getDeleted(novosDados.length);
-            if (novoEndereco == -1) {
-                arquivo.seek(arquivo.length());
-                novoEndereco = arquivo.getFilePointer();
-                arquivo.writeByte(' ');
-                arquivo.writeShort(novoTam);
-                arquivo.write(novosDados);
-            } else {
-                arquivo.seek(novoEndereco);
-                arquivo.writeByte(' ');
-                arquivo.skipBytes(2);
-                arquivo.write(novosDados);
-            }
+            arquivo.seek(arquivo.length());
+            long novoEndereco = arquivo.getFilePointer();
+            arquivo.writeByte(' ');
+            arquivo.writeShort(novoTam);
+            arquivo.write(novosDados);
             return novoEndereco;
         }
     }
@@ -204,10 +186,8 @@ public class Arquivo<T extends Registro> {
         arquivo.seek(posicao);
         byte lapide = arquivo.readByte();
         if (lapide == '*') return false;
-        short tamanho = arquivo.readShort();
         arquivo.seek(posicao);
         arquivo.writeByte('*');
-        addDeleted(tamanho, posicao);
         return true;
     }
 
