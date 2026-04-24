@@ -6,21 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Hash Extensível genérico e persistente em disco usando RandomAccessFile.
+ * Hash Extensível genérico persistente em disco.
  *
- * Funciona com qualquer tipo de entrada que implemente {@link RegistroHash}.
- * Cada entrada tem tamanho fixo em bytes (definido pelo RegistroHash),
- * o que garante acesso aleatório uniforme dentro dos buckets.
+ * Arquivos:
+ *   .dir → profundidade global + ponteiros pro arquivo de buckets
+ *   .bkt → baldes de tamanho fixo com lápide por entrada
  *
- * Arquivos em disco:
- *   {@code <nome>.dir} : [int profGlobal][long endereço]^(2^profGlobal)
- *   {@code <nome>.bkt} : sequência de baldes de tamanho fixo:
- *                [int profLocal][int count][CAPACIDADE × (byte lapide + byte[tamRegistro])]
- *
- * Uso:
- *   - Índice primário (int→long):     {@code new HashExtensivel<>("PK", new ParIntLong())}
- *   - Índice por nome (String→long):  {@code new HashExtensivel<>("Nome", new ParStringLong())}
- *   - Relacionamento 1:N (int→int[]): {@code new HashExtensivel<>("Rel", new ParIntListaInt())}
+ * Tipos de uso:
+ *   ParIntLong      → índice primário (ID → posição)
+ *   ParStringLong   → índice por nome (nome → posição, 120 bytes fixos)
+ *   ParIntListaInt  → relacionamento 1:N (ID pai → lista de IDs filhos)
  */
 public class HashExtensivel<T extends HashExtensivel.RegistroHash> {
 
