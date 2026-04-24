@@ -4,7 +4,7 @@ import stockit.dao.AmbienteDAO;
 import stockit.model.Ambiente;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @RestController
@@ -18,9 +18,6 @@ public class AmbienteController {
         this.dao = new AmbienteDAO();
     }
 
-    // ==============================
-    // CREATE
-    // ==============================
     @PostMapping
     public ResponseEntity<Ambiente> criar(@RequestBody Ambiente ambiente) {
         try {
@@ -32,75 +29,44 @@ public class AmbienteController {
         }
     }
 
-    // ==============================
-    // READ by ID
-    // ==============================
     @GetMapping("/{id}")
     public ResponseEntity<Ambiente> buscar(@PathVariable int id) {
         try {
             Ambiente ambiente = dao.buscar(id);
-
-            if (ambiente == null) {
-                return ResponseEntity.notFound().build();
-            }
-
+            if (ambiente == null) return ResponseEntity.notFound().build();
             return ResponseEntity.ok(ambiente);
-
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    // ==============================
-    // READ ALL
-    // ==============================
     @GetMapping
     public ResponseEntity<List<Ambiente>> listar() {
         try {
-            List<Ambiente> lista = dao.listar();
-            
-            return ResponseEntity.ok(lista);
+            return ResponseEntity.ok(dao.listar());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
-    // ==============================
-    // UPDATE
-    // ==============================
-    @PutMapping("/{id}")
-    public ResponseEntity<Boolean> atualizar(
-            @PathVariable int id,
-            @RequestBody Ambiente ambiente) {
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Boolean> atualizar(@PathVariable int id, @RequestBody Ambiente ambiente) {
         try {
             ambiente.setId(id);
-            boolean atualizado = dao.alterar(ambiente);
-
-            if (!atualizado) {
-                return ResponseEntity.notFound().build();
-            }
-
+            boolean ok = dao.alterar(ambiente);
+            if (!ok) return ResponseEntity.notFound().build();
             return ResponseEntity.ok(true);
-
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    // ==============================
-    // DELETE
-    // ==============================
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deletar(@PathVariable int id) {
         try {
-            boolean deletado = dao.excluir(id);
-
-            if (!deletado) {
-                return ResponseEntity.notFound().build();
-            }
-
+            boolean ok = dao.excluir(id);
+            if (!ok) return ResponseEntity.notFound().build();
             return ResponseEntity.ok(true);
-
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

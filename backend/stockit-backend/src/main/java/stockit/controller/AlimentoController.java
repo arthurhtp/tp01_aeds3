@@ -18,9 +18,6 @@ public class AlimentoController {
         this.dao = new AlimentoDAO();
     }
 
-    // ==============================
-    // CREATE
-    // ==============================
     @PostMapping
     public ResponseEntity<Alimento> criar(@RequestBody Alimento alimento) {
         try {
@@ -32,75 +29,44 @@ public class AlimentoController {
         }
     }
 
-    // ==============================
-    // READ by ID
-    // ==============================
     @GetMapping("/{id}")
     public ResponseEntity<Alimento> buscar(@PathVariable int id) {
         try {
             Alimento alimento = dao.buscar(id);
-
-            if (alimento == null) {
-                return ResponseEntity.notFound().build();
-            }
-
+            if (alimento == null) return ResponseEntity.notFound().build();
             return ResponseEntity.ok(alimento);
-
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    // ==============================
-    // READ ALL
-    // ==============================
     @GetMapping
     public ResponseEntity<List<Alimento>> listar() {
         try {
-            List<Alimento> lista = dao.listar();
-            return ResponseEntity.ok(lista);
+            return ResponseEntity.ok(dao.listar());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    // ==============================
-    // UPDATE
-    // ==============================
     @PutMapping("/{id}")
-    public ResponseEntity<Boolean> atualizar(
-            @PathVariable int id,
-            @RequestBody Alimento alimento) {
-
+    public ResponseEntity<Boolean> atualizar(@PathVariable int id, @RequestBody Alimento alimento) {
         try {
             alimento.setId(id);
-            boolean atualizado = dao.alterar(alimento);
-
-            if (!atualizado) {
-                return ResponseEntity.notFound().build();
-            }
-
+            boolean ok = dao.alterar(alimento);
+            if (!ok) return ResponseEntity.notFound().build();
             return ResponseEntity.ok(true);
-
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    // ==============================
-    // DELETE
-    // ==============================
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deletar(@PathVariable int id) {
         try {
-            boolean deletado = dao.excluir(id);
-
-            if (!deletado) {
-                return ResponseEntity.notFound().build();
-            }
-
+            boolean ok = dao.excluir(id);
+            if (!ok) return ResponseEntity.notFound().build();
             return ResponseEntity.ok(true);
-
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
