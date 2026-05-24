@@ -45,17 +45,7 @@ Este comando irá iniciar:
 
 ---
 
-### 2. Popular o banco (primeira vez)
-
-Em outro terminal:
-
-```bash
-./seed.sh
-```
-
----
-
-### 3. Acessar o sistema
+### 2. Acessar o sistema
 
 - Frontend: http://localhost:3000
 - Backend: http://localhost:8081
@@ -84,5 +74,4 @@ tp01_aeds3/
 │       └── visualizacao.js     → Hash, Codificacao, Arvore B+, Ordenacao
 │
 ├── start.sh                    → Inicia backend + frontend
-└── seed.sh                     → Popula o banco com dados de teste
 ```
