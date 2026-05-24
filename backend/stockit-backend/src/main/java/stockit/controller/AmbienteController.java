@@ -145,8 +145,15 @@ public class AmbienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deletar(@PathVariable int id) {
+    public ResponseEntity<?> deletar(@PathVariable int id) {
         try {
+            // Integridade referencial: verificar se há itens vinculados
+            List<Integer> itensVinculados = itemDao.buscarIdsPorAmbiente(id);
+            if (!itensVinculados.isEmpty()) {
+                return ResponseEntity.status(409).body(java.util.Map.of(
+                    "erro", "Não é possível excluir: este ambiente possui " + itensVinculados.size() + " alimento(s) vinculado(s). Remova os vínculos primeiro."
+                ));
+            }
             boolean ok = dao.excluir(id);
             if (!ok) return ResponseEntity.notFound().build();
             return ResponseEntity.ok(true);

@@ -498,3 +498,55 @@ footer {
   color: #999;
   font-size: 0.75rem;
 }
+
+/* Árvore B+ */
+.arvore-container {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.arvore-no {
+  margin: 4px 0;
+}
+
+.arvore-folha,
+.arvore-interno {
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+.arvore-folha {
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+}
+
+.arvore-interno {
+  background: #e3f2fd;
+  border: 1px solid #bbdefb;
+}
+
+.arvore-tipo {
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.arvore-chaves {
+  font-family: "SF Mono", monospace;
+  font-size: 0.75rem;
+}
+
+.arvore-par {
+  color: #2e7d32;
+}
+
+.arvore-link {
+  color: #999;
+  font-size: 0.7rem;
+}

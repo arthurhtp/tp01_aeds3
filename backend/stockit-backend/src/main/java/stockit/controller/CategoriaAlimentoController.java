@@ -1,6 +1,7 @@
 package stockit.controller;
 
 import stockit.dao.CategoriaAlimentoDAO;
+import stockit.dao.AlimentoDAO;
 import stockit.model.CategoriaAlimento;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,11 @@ import java.util.List;
 public class CategoriaAlimentoController {
 
     private final CategoriaAlimentoDAO dao;
+    private final AlimentoDAO alimentoDao;
 
     public CategoriaAlimentoController() throws Exception {
         this.dao = new CategoriaAlimentoDAO();
+        this.alimentoDao = new AlimentoDAO();
     }
 
     @PostMapping
@@ -62,8 +65,15 @@ public class CategoriaAlimentoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deletar(@PathVariable int id) {
+    public ResponseEntity<?> deletar(@PathVariable int id) {
         try {
+            // Integridade referencial: verificar se há alimentos nesta categoria
+            List<Integer> alimentosVinculados = alimentoDao.buscarIdsPorCategoria(id);
+            if (!alimentosVinculados.isEmpty()) {
+                return ResponseEntity.status(409).body(java.util.Map.of(
+                    "erro", "Não é possível excluir: esta categoria possui " + alimentosVinculados.size() + " alimento(s) vinculado(s). Remova ou altere a categoria dos alimentos primeiro."
+                ));
+            }
             boolean ok = dao.excluir(id);
             if (!ok) return ResponseEntity.notFound().build();
             return ResponseEntity.ok(true);

@@ -7,11 +7,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-/**
- * Controller utilitário para visualização dos dados brutos em disco.
- * Permite ver o conteúdo dos arquivos .dat (registros), .dir (diretório hash)
- * e .bkt (buckets do hash extensível).
- */
+// Visualizacao dos dados brutos em disco (.dat, .dir, .bkt)
 @RestController
 @RequestMapping("/data-view")
 @CrossOrigin(origins = "*")
