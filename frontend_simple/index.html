@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StockIt</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>StockIt</h1>
+      <p>AEDS3 - Hash Extensivel, Arvore B+, Intercalacao Balanceada, N:N</p>
+    </header>
+
+    <main id="app">
+      <div id="tela-inicial" class="tela">
+        <h2>Entidades</h2>
+        <div class="entidades-grid">
+          <button
+            class="btn-entidade"
+            onclick="navegarEntidade('CategoriaAlimento')"
+          >
+            <span>Categoria Alimento</span>
+          </button>
+          <button class="btn-entidade" onclick="navegarEntidade('Alimento')">
+            <span>Alimento</span>
+          </button>
+          <button class="btn-entidade" onclick="navegarEntidade('Ambiente')">
+            <span>Ambiente</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="tela-entidade" class="tela hidden">
+        <button class="btn-voltar" onclick="voltarInicio()">voltar</button>
+        <h2 id="titulo-entidade"></h2>
+
+        <div class="acoes-bar">
+          <button class="btn-acao active" onclick="setTab('listagem')">
+            Listagem
+          </button>
+          <button class="btn-acao" onclick="setTab('criar')">+ Novo</button>
+          <button class="btn-acao" onclick="setTab('hash')">Hash</button>
+          <button class="btn-acao" onclick="setTab('encoding')">
+            Codificacao
+          </button>
+          <button class="btn-acao" onclick="setTab('ordenacao')">
+            Ordenacao
+          </button>
+          <button class="btn-acao btn-arvore hidden" onclick="setTab('arvore')">
+            Arvore B+
+          </button>
+        </div>
+
+        <div id="tab-content"></div>
+      </div>
+    </main>
+
+    <footer>
+      <p>Arthur Tristao - Davi Godoi - Augusto Bizzaria</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/categoria.js"></script>
+    <script src="js/alimento.js"></script>
+    <script src="js/ambiente.js"></script>
+    <script src="js/visualizacao.js"></script>
+  </body>
+</html>

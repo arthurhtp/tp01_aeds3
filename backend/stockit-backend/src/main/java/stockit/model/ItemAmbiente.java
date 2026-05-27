@@ -2,26 +2,24 @@ package stockit.model;
 
 import java.io.*;
 
+// Tabela intermediaria N:N entre Alimento e Ambiente. PK composta: (alimentoId, ambienteId)
 public class ItemAmbiente implements Registro {
 
     private int id;
-    private int alimentoId; // FK para Alimento
-    private int ambienteId; // FK para Ambiente
+    private int alimentoId;
+    private int ambienteId;
     private short quantidade;
     private int dataCadastro;
     private int dataVencimento;
 
-    // Construtor vazio (necessário para o método getConstructor no DAO)
     public ItemAmbiente() {
         this(-1, -1, -1, (short) 0, 0, 0);
     }
 
-    // Construtor sem ID (usado na criação de um novo registro antes de salvar)
     public ItemAmbiente(int alimentoId, int ambienteId, short quantidade, int dataCadastro, int dataVencimento) {
         this(0, alimentoId, ambienteId, quantidade, dataCadastro, dataVencimento);
     }
 
-    // Construtor completo
     public ItemAmbiente(int id, int alimentoId, int ambienteId, short quantidade, int dataCadastro, int dataVencimento) {
         this.id = id;
         this.alimentoId = alimentoId;
@@ -31,81 +29,49 @@ public class ItemAmbiente implements Registro {
         this.dataVencimento = dataVencimento;
     }
 
-    // Getters e Setters
-    @Override
-    public void setId(int id) {
-        this.id = id;
+    // Chave composta: alimentoId * 100000 + ambienteId
+    public int getChaveComposta() {
+        return alimentoId * 100000 + ambienteId;
     }
 
     @Override
-    public int getId() {
-        return this.id;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public int getAlimentoId() {
-        return alimentoId;
-    }
+    @Override
+    public int getId() { return this.id; }
 
-    public void setAlimentoId(int alimentoId) {
-        this.alimentoId = alimentoId;
-    }
+    public int getAlimentoId() { return alimentoId; }
+    public void setAlimentoId(int alimentoId) { this.alimentoId = alimentoId; }
 
-    public int getAmbienteId() {
-        return ambienteId;
-    }
+    public int getAmbienteId() { return ambienteId; }
+    public void setAmbienteId(int ambienteId) { this.ambienteId = ambienteId; }
 
-    public void setAmbienteId(int ambienteId) {
-        this.ambienteId = ambienteId;
-    }
+    public short getQuantidade() { return quantidade; }
+    public void setQuantidade(short quantidade) { this.quantidade = quantidade; }
 
-    public short getQuantidade() {
-        return quantidade;
-    }
+    public int getDataCadastro() { return dataCadastro; }
+    public void setDataCadastro(int dataCadastro) { this.dataCadastro = dataCadastro; }
 
-    public void setQuantidade(short quantidade) {
-        this.quantidade = quantidade;
-    }
+    public int getDataVencimento() { return dataVencimento; }
+    public void setDataVencimento(int dataVencimento) { this.dataVencimento = dataVencimento; }
 
-    public int getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(int dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
-    public int getDataVencimento() {
-        return dataVencimento;
-    }
-
-    public void setDataVencimento(int dataVencimento) {
-        this.dataVencimento = dataVencimento;
-    }
-
-    // Serialização (Transformar o objeto em um vetor de bytes)
     @Override
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
-
-        // Escrevendo os atributos na ordem especificada [cite: 110, 173, 174]
         dos.writeInt(this.id);
         dos.writeInt(this.alimentoId);
         dos.writeInt(this.ambienteId);
         dos.writeShort(this.quantidade);
         dos.writeInt(this.dataCadastro);
         dos.writeInt(this.dataVencimento);
-
         return baos.toByteArray();
     }
 
-    // Desserialização (Transformar o vetor de bytes de volta no objeto)
     @Override
     public void fromByteArray(byte[] b) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(b);
         DataInputStream dis = new DataInputStream(bais);
-
-        // Lendo os atributos na mesma ordem que foram escritos
         this.id = dis.readInt();
         this.alimentoId = dis.readInt();
         this.ambienteId = dis.readInt();
@@ -119,6 +85,7 @@ public class ItemAmbiente implements Registro {
         return "\nID................: " + this.id +
                "\nID do Alimento....: " + this.alimentoId +
                "\nID do Ambiente....: " + this.ambienteId +
+               "\nChave Composta....: (" + this.alimentoId + "," + this.ambienteId + ")" +
                "\nQuantidade........: " + this.quantidade +
                "\nData de Cadastro..: " + this.dataCadastro +
                "\nData de Vencimento: " + this.dataVencimento;

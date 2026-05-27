@@ -22,58 +22,33 @@
 
 Antes de executar o projeto, é necessário ter instalado:
 
-- **Node.js** (versão 18 ou superior)
-- **NPM** (instalado junto com Node.js)
-- **Java JDK** (versão 17 ou superior)
-- **Apache Maven**
+- **Java JDK** (versão 21 ou superior)
+- **Python 3** (para servir o frontend)
 - **Git** (opcional, para clonar o repositório)
 
 ---
 
 ## Como executar o projeto
 
-### 1. Instalar dependências do Node
+### 1. Iniciar backend e frontend
 
-Na pasta raiz do projeto(tp01_aeds3):
-
-```bash
-npm install
-```
-
----
-
-Na pasta de UI(frontend):
+Na pasta raiz do projeto (tp01_aeds3):
 
 ```bash
-npm install
-```
-
----
-
-### 2. Executar o projeto
-
-Na pasta raiz do projeto execute:
-
-```bash
-npm run dev
+./start.sh
 ```
 
 Este comando irá iniciar:
 
-- **Backend**: aplicação Spring Boot
-- **Frontend**: aplicação React (Vite)
+- **Backend**: aplicação Spring Boot (porta 8081)
+- **Frontend**: servidor HTTP Python (porta 3000)
 
 ---
 
-### 3. Acessar o sistema
+### 2. Acessar o sistema
 
-Após iniciar o projeto, o frontend estará disponível em:
-
-```
-http://localhost:PORT QUE O VITE MOSTRAR
-```
-
-O backend estará rodando na porta padrão do **Spring Boot (8081)**.
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8081
 
 ## Estrutura do Projeto
 
@@ -82,22 +57,21 @@ tp01_aeds3/
 │
 ├── backend/stockit-backend/
 │   ├── src/main/java/stockit/
-│   │   ├── model/              → Entidades (Alimento, Registro, etc.)
-│   │   ├── dao/                → Acesso a dados (HashExtensivel, DAOs)
-│   │   ├── controller/         → Controllers REST (Spring Boot)
-│   │   └── StockitBackendApplication.java
-│   ├── src/test/java/stockit/  → Testes Unitários
-│   ├── data/                   → Arquivos binários (.dat, .dir, .bkt)
-│   └── pom.xml                 → Dependências Maven
+│   │   ├── model/              → Entidades (Alimento, Ambiente, CategoriaAlimento, ItemAmbiente)
+│   │   ├── dao/                → Persistencia (Arquivo, HashExtensivel, ArvoreBMais, IntercalacaoBalanceada)
+│   │   └── controller/         → Controllers REST (CRUD, visualizacao, ordenacao)
+│   └── data/                   → Arquivos binarios (.dat, .dir, .bkt, .bplus)
 │
-├── frontend/StockIT/
-│   ├── src/
-│   │   ├── assets/images/      → Imagens
-│   │   ├── components/         → Componentes React
-│   │   ├── pages/              → Páginas da Aplicação
-│   │   ├── services/           → Integração com API (Axios/Fetch)
-│   │   └── types/              → Tipagens TypeScript
-│   └── package.json            → Configurações npm (Vite)
+├── frontend_simple/
+│   ├── index.html
+│   ├── style.css
+│   └── js/
+│       ├── api.js              → Client HTTP
+│       ├── app.js              → Navegacao, tabs, CRUD generico
+│       ├── categoria.js        → CategoriaAlimento
+│       ├── alimento.js         → Alimento + N:N bidirecional
+│       ├── ambiente.js         → Ambiente + N:N bidirecional + CRUD ItemAmbiente
+│       └── visualizacao.js     → Hash, Codificacao, Arvore B+, Ordenacao
 │
-└── docs/                       → Documentação do Projeto (PDFs)
+├── start.sh                    → Inicia backend + frontend
 ```

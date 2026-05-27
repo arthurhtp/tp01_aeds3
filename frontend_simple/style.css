@@ -1,0 +1,552 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  background: #f5f5f5;
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: #fff;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+header h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111;
+}
+
+header p {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+main {
+  flex: 1;
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Telas */
+.tela {
+  animation: fadeIn 0.2s ease;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Tela Inicial */
+h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.entidades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.btn-entidade {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 24px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.btn-entidade:hover {
+  border-color: #999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.btn-entidade .icon {
+  font-size: 1.8rem;
+}
+
+/* Botão Voltar */
+.btn-voltar {
+  background: none;
+  border: none;
+  color: #666;
+  padding: 6px 0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.btn-voltar:hover {
+  color: #111;
+}
+
+/* Ações */
+.acoes-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-acao {
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.15s;
+  background: #fff;
+  color: #444;
+}
+
+.btn-acao:hover {
+  border-color: #999;
+  background: #fafafa;
+}
+
+.btn-acao.active {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+/* Tabela de listagem */
+.table-container {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.85rem;
+}
+
+th {
+  background: #fafafa;
+  color: #666;
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background: #f8f8f8;
+}
+
+/* Botões de ação na tabela */
+.row-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-row {
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  background: #fff;
+  color: #555;
+  transition: all 0.1s;
+}
+
+.btn-row:hover {
+  border-color: #999;
+}
+
+.btn-row.delete {
+  color: #d32f2f;
+  border-color: #ffcdd2;
+}
+
+.btn-row.delete:hover {
+  background: #ffebee;
+  border-color: #d32f2f;
+}
+
+/* Formulários */
+.form-panel {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.form-panel h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  padding: 8px 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #222;
+  font-size: 0.85rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.btn-submit {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.btn-submit:hover {
+  background: #333;
+}
+
+.btn-cancel {
+  background: #fff;
+  color: #666;
+  border: 1px solid #ddd;
+  padding: 9px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.btn-cancel:hover {
+  border-color: #999;
+}
+
+/* Mensagens */
+.msg-sucesso {
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-top: 12px;
+  color: #2e7d32;
+  font-size: 0.85rem;
+}
+
+.msg-erro {
+  background: #ffebee;
+  border: 1px solid #ffcdd2;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-top: 12px;
+  color: #c62828;
+  font-size: 0.85rem;
+}
+
+/* Hash View */
+.panel {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.panel h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.hash-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.hash-tab {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  background: #fff;
+  color: #555;
+}
+
+.hash-tab:hover,
+.hash-tab.active {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.hash-bucket {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.hash-bucket h5 {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.hash-slot {
+  padding: 4px 8px;
+  margin: 2px 0;
+  border-radius: 3px;
+  font-family: "SF Mono", "Fira Code", monospace;
+  font-size: 0.75rem;
+}
+
+.hash-slot.ativo {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.hash-slot.inativo {
+  background: #f5f5f5;
+  color: #999;
+}
+
+/* Hex Dump */
+.hex-dump {
+  font-family: "SF Mono", "Fira Code", monospace;
+  font-size: 0.72rem;
+  background: #1e1e1e;
+  padding: 14px;
+  border-radius: 6px;
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.5;
+  color: #d4d4d4;
+}
+
+/* Encoding View */
+.encoding-registro {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.encoding-registro h5 {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.encoding-hex {
+  font-family: "SF Mono", "Fira Code", monospace;
+  font-size: 0.72rem;
+  color: #bf360c;
+  word-break: break-all;
+}
+
+.encoding-legivel {
+  margin-top: 4px;
+  color: #555;
+  font-size: 0.8rem;
+}
+
+.encoding-meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 4px;
+  font-size: 0.72rem;
+  color: #999;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+  font-size: 0.85rem;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-size: 0.85rem;
+}
+
+/* Arquivo buttons */
+.file-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.file-tab {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-family: "SF Mono", monospace;
+  background: #fff;
+  color: #555;
+}
+
+.file-tab:hover {
+  border-color: #999;
+}
+
+/* FK badge */
+.fk-badge {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.72rem;
+}
+
+/* Footer */
+footer {
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  padding: 14px;
+  text-align: center;
+  color: #999;
+  font-size: 0.75rem;
+}
+
+/* Árvore B+ */
+.arvore-container {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.arvore-no {
+  margin: 4px 0;
+}
+
+.arvore-folha,
+.arvore-interno {
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+.arvore-folha {
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+}
+
+.arvore-interno {
+  background: #e3f2fd;
+  border: 1px solid #bbdefb;
+}
+
+.arvore-tipo {
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.arvore-chaves {
+  font-family: "SF Mono", monospace;
+  font-size: 0.75rem;
+}
+
+.arvore-par {
+  color: #2e7d32;
+}
+
+.arvore-link {
+  color: #999;
+  font-size: 0.7rem;
+}
