@@ -59,7 +59,7 @@ function updateTabButtons() {
   btns.forEach(function (btn) {
     btn.classList.remove("active");
   });
-  var tabs = ["listagem", "criar", "hash", "encoding", "ordenacao", "arvore"];
+  var tabs = ["listagem", "criar", "hash", "encoding", "ordenacao", "arvore", "compressao"];
   var idx = tabs.indexOf(tabAtual);
   if (idx >= 0 && btns[idx]) btns[idx].classList.add("active");
 }
@@ -85,6 +85,9 @@ function renderTab() {
     case "arvore":
       container.innerHTML = '<div id="arvore-inline"></div>';
       renderArvoreBMaisInline();
+      break;
+    case "compressao":
+      renderCompressaoView(container);
       break;
   }
 }
