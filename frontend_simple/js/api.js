@@ -168,4 +168,13 @@ const API = {
       });
     },
   },
+
+  compressao: {
+    huffman: (entidade) =>
+      fetch(BASE_URL + "/compressao/" + entidade + "/huffman", { method: "POST" }).then((r) => r.json()),
+    lzw: (entidade) =>
+      fetch(BASE_URL + "/compressao/" + entidade + "/lzw", { method: "POST" }).then((r) => r.json()),
+    downloadHuffman: (entidade) => BASE_URL + "/compressao/" + entidade + "/huffman/download",
+    downloadLzw: (entidade) => BASE_URL + "/compressao/" + entidade + "/lzw/download",
+  },
 };
