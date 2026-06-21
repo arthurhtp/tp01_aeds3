@@ -177,4 +177,22 @@ const API = {
     downloadHuffman: (entidade) => BASE_URL + "/compressao/" + entidade + "/huffman/download",
     downloadLzw: (entidade) => BASE_URL + "/compressao/" + entidade + "/lzw/download",
   },
+
+  buscaPadrao: {
+    // Pesquisa um padrão no campo "nome" de Alimento usando KMP ou Boyer-Moore.
+    alimentos: (padrao, algoritmo) =>
+      fetch(
+        BASE_URL +
+          "/busca-padrao/alimentos?padrao=" +
+          encodeURIComponent(padrao) +
+          "&algoritmo=" +
+          encodeURIComponent(algoritmo),
+      ).then((r) => {
+        if (!r.ok)
+          return r.json().then((d) => {
+            throw new Error(d.erro || "Erro na busca");
+          });
+        return r.json();
+      }),
+  },
 };

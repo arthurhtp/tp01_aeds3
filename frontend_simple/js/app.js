@@ -31,6 +31,13 @@ function navegarEntidade(entidade) {
     else btnArvore.classList.add("hidden");
   }
 
+  // Mostrar botão "Buscar padrão" (KMP/BM) só em Alimento
+  var btnBusca = document.querySelector(".btn-busca");
+  if (btnBusca) {
+    if (entidade === "Alimento") btnBusca.classList.remove("hidden");
+    else btnBusca.classList.add("hidden");
+  }
+
   tabAtual = "listagem";
   updateTabButtons();
   carregarCaches().then(function () {
@@ -59,7 +66,7 @@ function updateTabButtons() {
   btns.forEach(function (btn) {
     btn.classList.remove("active");
   });
-  var tabs = ["listagem", "criar", "hash", "encoding", "ordenacao", "arvore", "compressao"];
+  var tabs = ["listagem", "criar", "hash", "encoding", "ordenacao", "arvore", "compressao", "busca"];
   var idx = tabs.indexOf(tabAtual);
   if (idx >= 0 && btns[idx]) btns[idx].classList.add("active");
 }
@@ -88,6 +95,9 @@ function renderTab() {
       break;
     case "compressao":
       renderCompressaoView(container);
+      break;
+    case "busca":
+      renderBuscaPadraoView(container);
       break;
   }
 }

@@ -6,7 +6,10 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 echo "Iniciando StockIt..."
 
 cd "$SCRIPT_DIR/frontend_simple"
-python3 -m http.server 3000 &
+# Usa 'python' (no Windows, 'python3' costuma ser o atalho falso da Microsoft Store,
+# que retorna exit 0 mas nao executa; por isso checamos a string de versao real)
+if python3 --version 2>&1 | grep -qi '^Python 3\.'; then PY=python3; else PY=python; fi
+"$PY" -m http.server 3000 &
 FRONTEND_PID=$!
 echo "Frontend: http://localhost:3000"
 
