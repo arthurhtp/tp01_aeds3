@@ -58,4 +58,45 @@ public final class XORCipher {
         if (cifrado == null) return "";
         return new String(aplicar(cifrado), "UTF-8");
     }
+
+    /**
+     * Cifra um texto e devolve o resultado como string hexadecimal
+     * (ex.: "0C 10 1B 09 ..."), para visualização do conteúdo cifrado.
+     */
+    public static String cifrarParaHex(String texto) throws UnsupportedEncodingException {
+        return paraHex(cifrar(texto));
+    }
+
+    /**
+     * Decifra um texto a partir da sua representação hexadecimal
+     * (aceita com ou sem espaços entre os bytes).
+     */
+    public static String decifrarDeHex(String hex) throws UnsupportedEncodingException {
+        return decifrar(deHex(hex));
+    }
+
+    /** Converte bytes em string hexadecimal separada por espaços. */
+    public static String paraHex(byte[] dados) {
+        if (dados == null) return "";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < dados.length; i++) {
+            if (i > 0) sb.append(' ');
+            sb.append(String.format("%02X", dados[i]));
+        }
+        return sb.toString();
+    }
+
+    /** Converte uma string hexadecimal (com ou sem espaços) em bytes. */
+    public static byte[] deHex(String hex) {
+        if (hex == null) return new byte[0];
+        String limpo = hex.replaceAll("\\s+", "");
+        if (limpo.length() % 2 != 0) {
+            throw new IllegalArgumentException("Hex inválido: número ímpar de dígitos");
+        }
+        byte[] out = new byte[limpo.length() / 2];
+        for (int i = 0; i < out.length; i++) {
+            out[i] = (byte) Integer.parseInt(limpo.substring(i * 2, i * 2 + 2), 16);
+        }
+        return out;
+    }
 }

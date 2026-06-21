@@ -70,6 +70,11 @@ const API = {
 
   ambiente: {
     listar: () => fetch(BASE_URL + "/ambientes").then((r) => r.json()),
+    criptografia: () =>
+      fetch(BASE_URL + "/ambientes/criptografia").then((r) => {
+        if (!r.ok) throw new Error("Erro ao obter criptografia");
+        return r.json();
+      }),
     buscar: (id) =>
       fetch(BASE_URL + "/ambientes/" + id).then((r) => {
         if (!r.ok) throw new Error("Não encontrado");
@@ -176,6 +181,33 @@ const API = {
       fetch(BASE_URL + "/compressao/" + entidade + "/lzw", { method: "POST" }).then((r) => r.json()),
     downloadHuffman: (entidade) => BASE_URL + "/compressao/" + entidade + "/huffman/download",
     downloadLzw: (entidade) => BASE_URL + "/compressao/" + entidade + "/lzw/download",
+  },
+
+  criptografia: {
+    cifrar: (texto) =>
+      fetch(BASE_URL + "/criptografia/cifrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ texto: texto }),
+      }).then((r) => {
+        if (!r.ok)
+          return r.json().then((d) => {
+            throw new Error(d.erro || "Erro ao cifrar");
+          });
+        return r.json();
+      }),
+    decifrar: (hex) =>
+      fetch(BASE_URL + "/criptografia/decifrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ hex: hex }),
+      }).then((r) => {
+        if (!r.ok)
+          return r.json().then((d) => {
+            throw new Error(d.erro || "Erro ao decifrar");
+          });
+        return r.json();
+      }),
   },
 
   buscaPadrao: {

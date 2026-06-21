@@ -706,3 +706,11 @@ footer {
   padding: 0 2px;
   border-radius: 2px;
 }
+
+/* ===== Criptografia XOR ===== */
+.hex-inline {
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.75rem;
+  color: #b45309;
+  word-break: break-all;
+}
