@@ -1,0 +1,167 @@
+========================================================================
+TRABALHO PRATICO - AED III - FASE V
+Casamento de Padroes (KMP / Boyer-Moore) e Criptografia XOR
+Formulario Tecnico
+========================================================================
+
+Integrantes:
+- Arthur Henrique Tristao Pinto
+- Davi Godoi Grilo
+- Augusto Bizzaria
+
+Repositorio GitHub: https://github.com/arthurhtp/tp01_aeds3
+
+
+------------------------------------------------------------------------
+1. Qual campo textual foi escolhido para aplicar os algoritmos de
+   casamento de padroes? Por que?
+------------------------------------------------------------------------
+Foi escolhido o campo "nome" da tabela Alimento.
+
+Motivos:
+- E o campo textual mais relevante para o usuario do sistema (um estoque
+  de alimentos): o caso de uso mais natural e "encontrar alimentos cujo
+  nome contem um determinado trecho".
+- E o campo com maior variedade de valores e maior volume de registros,
+  o que torna a busca por padrao util de verdade.
+- E uma string de tamanho variavel, ideal para demonstrar os algoritmos
+  de casamento de padroes sobre texto.
+
+
+------------------------------------------------------------------------
+2. Explique o funcionamento do KMP implementado.
+------------------------------------------------------------------------
+Classe: stockit.busca.KMP
+
+O KMP (Knuth-Morris-Pratt) faz um pre-processamento do PADRAO, construindo
+a chamada tabela de falha (LPS - Longest Proper Prefix which is also
+Suffix). Para cada posicao i do padrao, lps[i] guarda o tamanho do maior
+prefixo proprio de padrao[0..i] que tambem e sufixo desse mesmo trecho.
+
+Durante a busca, o texto e percorrido com um ponteiro i (no texto) e um
+ponteiro j (no padrao):
+- Se os caracteres t[i] e p[j] sao iguais, ambos avancam. Quando j chega
+  ao tamanho do padrao, houve um casamento completo.
+- Se ha divergencia e j > 0, o ponteiro do TEXTO nunca retrocede: usa-se
+  j = lps[j-1] para reposicionar apenas o ponteiro do padrao,
+  reaproveitando o trecho que ja havia casado.
+- Se ha divergencia e j == 0, avanca-se apenas no texto.
+
+Como o ponteiro do texto nunca volta, o texto e varrido uma unica vez.
+Complexidade: O(m) para montar a tabela + O(n) para a busca = O(n + m).
+
+A comparacao e case-insensitive: texto e padrao sao normalizados para
+minusculas antes da busca (toLowerCase), o que e mais adequado para
+pesquisa de nomes.
+
+
+------------------------------------------------------------------------
+3. Explique o funcionamento do Boyer-Moore implementado.
+------------------------------------------------------------------------
+Classe: stockit.busca.BoyerMoore
+
+O Boyer-Moore compara o padrao com o texto da DIREITA para a ESQUERDA.
+Quando ocorre uma divergencia, o padrao e deslizado para a direita
+usando duas heuristicas, escolhendo-se sempre o MAIOR salto entre elas:
+
+a) Bad Character (caractere ruim) - OBRIGATORIA:
+   Ao falhar no caractere c do texto, alinha-se o padrao de modo que a
+   ultima ocorrencia de c no padrao fique sob c. Se c nao existe no
+   padrao, pula-se o padrao inteiro alem de c. A tabela do "ultimo
+   indice" de cada caractere foi implementada com HashMap, para suportar
+   todo o conjunto Unicode (acentos etc.), em vez de um vetor ASCII de
+   256 posicoes.
+
+b) Good Suffix (bom sufixo) - OPCIONAL (implementada):
+   Aproveita o sufixo que JA casou. Se esse sufixo aparece em outra
+   posicao do padrao, ou se um prefixo do padrao coincide com um sufixo
+   do bom sufixo, desliza-se o padrao para reaproveitar esse trecho. O
+   pre-processamento monta o vetor de deslocamentos a partir do calculo
+   das "bordas" do padrao.
+
+Na pratica o Boyer-Moore costuma examinar bem menos que n caracteres,
+sendo sublinear no caso medio. O pior caso e O(n*m), mas com a heuristica
+de bom sufixo aproxima-se de O(n + m). Tambem e case-insensitive.
+
+
+------------------------------------------------------------------------
+4. Descreva como integrou os algoritmos ao sistema.
+------------------------------------------------------------------------
+- Camada de dados (DAO): o metodo
+  AlimentoDAO.buscarPorPadraoNome(padrao, algoritmo) percorre todos os
+  alimentos do arquivo e filtra aqueles cujo nome CONTEM o padrao,
+  usando KMP ou Boyer-Moore conforme o parametro "algoritmo".
+
+- Camada REST (Controller): BuscaPadraoController expoe o endpoint
+      GET /busca-padrao/alimentos?padrao=...&algoritmo=kmp|bm
+  que retorna os registros encontrados, o total, o algoritmo usado e o
+  tempo de execucao em microssegundos.
+
+- Interface (Frontend): na entidade Alimento ha a aba "Buscar padrao"
+  (arquivo frontend_simple/js/busca.js), que oferece:
+    i.   o menu "Pesquisar por padrao (KMP / BM)";
+    ii.  a escolha do algoritmo (KMP ou Boyer-Moore);
+    iii. o campo para o usuario informar o padrao (string);
+    iv.  a tabela com os registros encontrados, com destaque das
+         ocorrencias e o tempo de execucao.
+
+
+------------------------------------------------------------------------
+5. Quais dificuldades encontrou na implementacao dos dois algoritmos?
+------------------------------------------------------------------------
+- A maior dificuldade foi o pre-processamento da heuristica de Good
+  Suffix do Boyer-Moore (calculo das bordas e dos dois casos de
+  deslocamento), que e a parte mais sutil do algoritmo.
+- Foi necessario tratar caracteres acentados/Unicode: por isso a tabela
+  de bad character usa HashMap em vez do vetor ASCII de 256 posicoes.
+- Garantir que a busca fosse case-insensitive de forma consistente nos
+  dois algoritmos (normalizacao para minusculas).
+- Validar a corretude: os dois algoritmos foram testados contra uma busca
+  por forca-bruta (indexOf) em 200.000 casos aleatorios, incluindo
+  acentos, maiusculas/minusculas, espacos e padrao vazio, sem nenhuma
+  divergencia.
+
+
+------------------------------------------------------------------------
+6. Qual campo foi utilizado na criptografia?
+------------------------------------------------------------------------
+O campo "nome" da entidade Ambiente.
+
+Ele foi avaliado como sensivel porque revela o local fisico onde os itens
+ficam armazenados (geladeira, freezer, despensa, etc.).
+
+
+------------------------------------------------------------------------
+7. Qual foi o metodo utilizado na criptografia?
+------------------------------------------------------------------------
+Cifra simetrica XOR (cifra de Vernam com chave repetida ciclicamente).
+Classe: stockit.seguranca.XORCipher
+
+Cada byte do dado e combinado com um byte da chave atraves da operacao
+bit-a-bit XOR (^). A chave e repetida ao longo do dado. A propriedade
+fundamental do XOR e:
+
+        (D ^ K) ^ K = D
+
+ou seja, a MESMA operacao cifra e decifra. Por isso ha um unico metodo
+"aplicar(...)" usado para os dois sentidos.
+
+Integracao: a cifra e aplicada de forma transparente na serializacao da
+entidade Ambiente. Em Ambiente.toByteArray() o nome e cifrado antes de
+ser gravado, e em Ambiente.fromByteArray() ele e decifrado ao ser lido.
+Assim, o arquivo Ambiente.dat nunca contem o nome em texto claro, mas a
+API e a interface sempre exibem o texto legivel.
+
+Na interface, na listagem de Ambiente, a coluna "Nome" mostra o texto
+real e ha um botao "criptografar / descriptografar" por linha, que
+alterna a exibicao entre o nome claro e o nome cifrado em hexadecimal -
+exatamente o resultado da cifra XOR.
+
+
+========================================================================
+ENTREGA (itens do PDF)
+========================================================================
+1. Link para o GitHub: https://github.com/arthurhtp/tp01_aeds3
+2. README atualizado com instrucoes de compilacao e execucao.
+3. Formulario tecnico: este arquivo.
+4. Video explicativo: (incluir o link aqui antes da entrega no Canvas).

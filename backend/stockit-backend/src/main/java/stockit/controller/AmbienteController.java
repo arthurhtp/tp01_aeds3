@@ -4,7 +4,6 @@ import stockit.dao.AmbienteDAO;
 import stockit.dao.ItemAmbienteDAO;
 import stockit.model.Ambiente;
 import stockit.model.ItemAmbiente;
-import stockit.seguranca.XORCipher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,41 +106,6 @@ public class AmbienteController {
         try {
             return ResponseEntity.ok(dao.listar());
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    // DTO da visualização da criptografia: nome claro vs nome cifrado (hex).
-    public static class NomeCifrado {
-        public int id;
-        public int tipo;
-        public String nomeClaro;
-        public String nomeCifradoHex;
-        public int tamanhoBytes;
-    }
-
-    /**
-     * Mostra como o campo sensível "nome" é armazenado: texto claro (o que a API
-     * normalmente devolve, já decifrado) ao lado do conteúdo cifrado com XOR,
-     * exatamente como fica gravado no arquivo .dat. Serve para visualizar a
-     * criptografia no front.
-     */
-    @GetMapping("/criptografia")
-    public ResponseEntity<List<NomeCifrado>> visualizarCriptografia() {
-        try {
-            List<NomeCifrado> saida = new ArrayList<>();
-            for (Ambiente a : dao.listar()) {
-                NomeCifrado nc = new NomeCifrado();
-                nc.id = a.getId();
-                nc.tipo = a.getTipo();
-                nc.nomeClaro = a.getNome();
-                nc.nomeCifradoHex = XORCipher.cifrarParaHex(a.getNome());
-                nc.tamanhoBytes = XORCipher.cifrar(a.getNome()).length;
-                saida.add(nc);
-            }
-            return ResponseEntity.ok(saida);
-        } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
