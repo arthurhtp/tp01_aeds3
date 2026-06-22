@@ -47,7 +47,7 @@ async function renderCriptoView(container) {
     criptoAmbientes = await API.ambiente.listar();
 
     var html = '<div class="panel">';
-    html += "<h4>Criptografia XOR — campo sensível <code>nome</code> (Ambiente)</h4>";
+    html += "<h4>Criptografia XOR</h4>";
 
     // Campo de chave + botão: cifra os nomes dos ambientes ao clicar.
     html += '<div class="form-row" style="align-items:flex-end;">';
