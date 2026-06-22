@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import stockit.model.Alimento;
 import stockit.dao.HashExtensivel.*;
+import stockit.busca.KMP;
+import stockit.busca.BoyerMoore;
 
 public class AlimentoDAO {
 
@@ -95,6 +97,31 @@ public class AlimentoDAO {
     }
 
     public List<Alimento> listar() throws Exception { return arq.listar(); }
+
+    /**
+     * Pesquisa por casamento de padrões no campo textual "nome".
+     * Percorre todos os alimentos e retorna aqueles cujo nome CONTÉM o padrão,
+     * usando o algoritmo escolhido (KMP ou Boyer-Moore).
+     *
+     * @param padrao    string a procurar dentro do nome
+     * @param algoritmo "kmp" ou "bm" (qualquer outro valor cai em KMP)
+     */
+    public List<Alimento> buscarPorPadraoNome(String padrao, String algoritmo) throws Exception {
+        List<Alimento> resultado = new ArrayList<>();
+        if (padrao == null || padrao.isEmpty()) return resultado;
+
+        boolean usarBM = algoritmo != null
+                && (algoritmo.equalsIgnoreCase("bm") || algoritmo.equalsIgnoreCase("boyer-moore"));
+
+        for (Alimento a : arq.listar()) {
+            String nome = a.getNome();
+            boolean casou = usarBM
+                    ? BoyerMoore.contem(nome, padrao)
+                    : KMP.contem(nome, padrao);
+            if (casou) resultado.add(a);
+        }
+        return resultado;
+    }
 
     // --- helpers para 1:N ---
     private void inserirRelacionamento(HashExtensivel<ParIntListaInt> h, int chave, int valor) throws Exception {

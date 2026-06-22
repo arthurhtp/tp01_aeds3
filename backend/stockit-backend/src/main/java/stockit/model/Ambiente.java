@@ -1,6 +1,7 @@
 package stockit.model;
 
 import stockit.model.Registro;
+import stockit.seguranca.XORCipher;
 
 import java.io.*;
 
@@ -62,8 +63,11 @@ public class Ambiente implements Registro {
         // ID (4 bytes)
         dos.writeInt(this.id);
 
-        // Nome variável
-        byte[] nomeBytes = this.nome.getBytes("UTF-8");
+        // Nome variável — CAMPO SENSÍVEL: gravado CIFRADO no arquivo (XOR).
+        // O nome do ambiente revela onde os itens ficam guardados, por isso é
+        // tratado como sensível. Cifra-se aqui, na serialização, de modo que o
+        // .dat nunca contém o texto claro.
+        byte[] nomeBytes = XORCipher.cifrar(this.nome);
         dos.writeShort(nomeBytes.length);
         dos.write(nomeBytes);
 
@@ -82,11 +86,11 @@ public class Ambiente implements Registro {
         // ID
         this.id = dis.readInt();
 
-        // Nome variável
+        // Nome variável — está CIFRADO no arquivo; decifra ao ler (XOR).
         short tamNome = dis.readShort();
         byte[] nomeBytes = new byte[tamNome];
         dis.readFully(nomeBytes);
-        this.nome = new String(nomeBytes, "UTF-8");
+        this.nome = XORCipher.decifrar(nomeBytes);
 
         // Tipo
         this.tipo = dis.readByte();

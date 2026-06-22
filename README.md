@@ -59,7 +59,9 @@ tp01_aeds3/
 │   ├── src/main/java/stockit/
 │   │   ├── model/              → Entidades (Alimento, Ambiente, CategoriaAlimento, ItemAmbiente)
 │   │   ├── dao/                → Persistencia (Arquivo, HashExtensivel, ArvoreBMais, IntercalacaoBalanceada)
-│   │   └── controller/         → Controllers REST (CRUD, visualizacao, ordenacao)
+│   │   ├── busca/             → Casamento de padroes (KMP, BoyerMoore)        [Fase V]
+│   │   ├── seguranca/        → Criptografia (XORCipher)                       [Fase V]
+│   │   └── controller/         → Controllers REST (CRUD, visualizacao, ordenacao, busca-padrao)
 │   └── data/                   → Arquivos binarios (.dat, .dir, .bkt, .bplus)
 │
 ├── frontend_simple/
@@ -71,7 +73,44 @@ tp01_aeds3/
 │       ├── categoria.js        → CategoriaAlimento
 │       ├── alimento.js         → Alimento + N:N bidirecional
 │       ├── ambiente.js         → Ambiente + N:N bidirecional + CRUD ItemAmbiente
-│       └── visualizacao.js     → Hash, Codificacao, Arvore B+, Ordenacao
+│       ├── visualizacao.js     → Hash, Codificacao, Arvore B+, Ordenacao
+│       ├── compressao.js       → Compressao Huffman / LZW
+│       └── busca.js           → Pesquisa por padrao (KMP / BM)               [Fase V]
 │
 ├── start.sh                    → Inicia backend + frontend
 ```
+
+---
+
+## Fase V — Casamento de padrões e Criptografia
+
+### Como usar a busca por padrão (KMP / Boyer–Moore)
+
+1. Abra o frontend em http://localhost:3000 e clique na entidade **Alimento**.
+2. Clique na aba **Buscar padrao**.
+3. Escolha o algoritmo (**KMP** ou **Boyer–Moore**), digite o padrão (string) e clique em **Pesquisar**.
+4. O sistema retorna os alimentos cujo **nome** contém o padrão, com o tempo de execução e destaque das ocorrências. A busca não diferencia maiúsculas/minúsculas.
+
+Também é possível consultar a API diretamente:
+
+```
+GET http://localhost:8081/busca-padrao/alimentos?padrao=arr&algoritmo=kmp
+GET http://localhost:8081/busca-padrao/alimentos?padrao=arr&algoritmo=bm
+```
+
+### Criptografia (XOR)
+
+O campo **`nome` da entidade `Ambiente`** é tratado como sensível e gravado **cifrado** no arquivo
+`data/Ambiente/Ambiente.dat` usando a cifra XOR (`stockit.seguranca.XORCipher`). A cifragem é
+transparente: ocorre na serialização (`Ambiente.toByteArray`) e a decifragem na leitura
+(`Ambiente.fromByteArray`), de modo que a API e a interface sempre exibem o texto claro,
+mas o conteúdo bruto do arquivo permanece ilegível.
+
+Na listagem de **Ambiente**, a coluna **Nome** mostra o texto real e há um botão
+**criptografar / descriptografar** por linha, que alterna a exibição entre o nome claro e o
+nome cifrado em hexadecimal.
+
+> Observação: ambientes cadastrados antes da Fase V (gravados em texto claro) ficam ilegíveis após a
+> introdução da cifra. Os dados de `Ambiente` foram reiniciados; basta recadastrar os ambientes.
+
+> O formulário técnico da Fase V está em [`FASE5/formulario_tecnico.txt`](FASE5/formulario_tecnico.txt).

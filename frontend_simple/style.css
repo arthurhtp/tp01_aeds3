@@ -689,3 +689,28 @@ footer {
   padding: 6px 12px;
   border-top: 1px solid #fde68a;
 }
+
+/* ===== Busca por padrão (KMP / BM) ===== */
+.busca-meta {
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 16px 0 12px;
+}
+
+#busca-resultado mark {
+  background: #fde68a;
+  color: #92400e;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* ===== Criptografia XOR (aba Criptografia em Ambiente) ===== */
+.hex-inline {
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.75rem;
+  color: #b45309;
+  word-break: break-all;
+}

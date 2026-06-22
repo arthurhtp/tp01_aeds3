@@ -9,7 +9,7 @@
   <body>
     <header>
       <h1>StockIt</h1>
-      <p>AEDS3 - Hash Extensivel, Arvore B+, Intercalacao Balanceada, N:N</p>
+      <p>AEDS3</p>
     </header>
 
     <main id="app">
@@ -53,6 +53,12 @@
           <button class="btn-acao" onclick="setTab('compressao')">
             Compressao
           </button>
+          <button class="btn-acao btn-busca hidden" onclick="setTab('busca')">
+            Buscar padrao
+          </button>
+          <button class="btn-acao btn-cripto hidden" onclick="setTab('cripto')">
+            Criptografia
+          </button>
         </div>
 
         <div id="tab-content"></div>
@@ -60,7 +66,7 @@
     </main>
 
     <footer>
-      <p>Arthur Tristao - Davi Godoi - Augusto Bizzaria</p>
+      <p>Arthur Tristao - Davi Godoi </p>
     </footer>
 
     <script src="js/api.js"></script>
@@ -70,5 +76,7 @@
     <script src="js/ambiente.js"></script>
     <script src="js/visualizacao.js"></script>
     <script src="js/compressao.js"></script>
+    <script src="js/busca.js"></script>
+    <script src="js/cripto.js"></script>
   </body>
 </html>
